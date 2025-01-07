@@ -1,8 +1,10 @@
 <?php
-require_once "../src/class/user.php";
-require_once "../src/class/car.php";
-require_once "../src/class/RESEVER.php";
-// session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+require ("../src/class/colorType.php");
+session_start();
+
+
 // if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == 1))
 // {
 
@@ -12,22 +14,18 @@ require_once "../src/class/RESEVER.php";
 // }
 
 
-$person = new user();
-$totalRows = $person->Nbr_user();
-$car = new Car();
 
-$totalRowscar = $car->Nbr_Car();
+$color = new colorType();
 
-$RES1 = new RESEVER();
-$res2 = new RESEVER();
+$COLORS = $color->viewColor();
 
-$en_attente = $RES1->RECont('en_attente');
+$TYPE= new colorType();
 
-
-$actif = $res2->RECont('actif');
+$TYPES=$TYPE->viewType();
 
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -59,7 +57,6 @@ $actif = $res2->RECont('actif');
       <link rel="stylesheet" href="css/perfect-scrollbar.css" />
       <!-- custom css -->
       <link rel="stylesheet" href="css/custom.css" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/svg-with-js.min.css" integrity="sha512-vtbctC7BecZMHWPWej78RfcB9RmGpIx+G4+1IT2/Z9P7SIXApaI1XLOCrzpSKgNyTiw1VCmg/EkJXGo+LJYcpw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -154,105 +151,59 @@ $actif = $res2->RECont('actif');
                <!-- end topbar -->
                <!-- dashboard inner -->
                <div class="midde_cont">
-                  <div class="container-fluid">
-                     <div class="row column_title">
-                        <div class="col-md-12">
-                           <div class="page_title">
-                              <h2>Dashboard</h2>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="row column1">
-                        <div class="col-md-6 col-lg-3">
-                           <div class="full counter_section margin_bottom_30">
-                              <div class="couter_icon">
-                                 <div> 
-                                    <i class="fa fa-user yellow_color"></i>
-                                 </div>
-                              </div>
-                              <div class="counter_no">
-                                 <div>
-                                    <p class="total_no"><?php echo $totalRows;?></p>
-                                    <p class="head_couter">Welcome</p>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                           <div class="full counter_section margin_bottom_30">
-                              <div class="couter_icon">
-                                 <div> 
-                                 
-                                 <i class="fa-solid fa-car" style="color:blue;"></i>
-                                 </div>
-                              </div>
-                              <div class="counter_no">
-                                 <div>
-                                    <p class="total_no"><?php echo $totalRowscar;?></p>
-                                    <p class="head_couter">Car</p>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                           <div class="full counter_section margin_bottom_30">
-                              <div class="couter_icon">
-                                 <div> 
-                                 <i class="fa-solid fa-check-to-slot" style="color:green"></i>
-                                 </div>
-                              </div>
-                              <div class="counter_no">
-                                 <div>
-                                    <p class="total_no"><?php echo $actif;?></p>
-                                    <p class="head_couter">actif</p>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                           <div class="full counter_section margin_bottom_30">
-                              <div class="couter_icon">
-                                 <div> 
-                                    <i class="fa fa-comments-o red_color"></i>
-                                 </div>
-                              </div>
-                              <div class="counter_no">
-                                 <div>
-                                    <p class="total_no"><?php echo $en_attente;?></p>
-                                    <p class="head_couter">en_attente</p>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
- 
-                     <!-- graph -->
-                     <div class="row column2 graph margin_bottom_30">
-                        <div class="col-md-l2 col-lg-12">
-                           <div class="white_shd full">
-                              <div class="full graph_head">
-                                 <div class="heading1 margin_0">
-                                    <h2>Extra Area Chart</h2>
-                                 </div>
-                              </div>
-                              <div class="full graph_revenue">
-                                 <div class="row">
-                                    <div class="col-md-12">
-                                       <div class="content">
-                                          <div class="area_chart">
-                                             <canvas height="120" id="canvas"></canvas>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- end graph -->
+               <div class="container-fluid">
+    <form action="../src/objecte/regestretionthem.php" method="post">
+        <div id="vehicles-container">
+            <!-- Groupe de champs pour un véhicule -->
+            <div class="vehicle-group">
+                <!-- Model -->
+                <div class="mb-3">
+                    <label for="modele" class="form-label">Model</label>
+                    <input type="text" class="form-control" name="vehicles[0][modele]" required>
+                </div>
+                
+                
+                
+                <hr>
+            </div>
+        </div>
 
+        <!-- Boutons -->
+        <button type="button" id="add-vehicle" class="btn btn-secondary">Add Another Vehicle</button>
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                <hr>
 
-                  </div>
+    </form>
+</div>
+
+<div class="midde_cont">
+               <table class="table table-striped table-bordered align-middle" style="margin-top: 20px;">
+  <thead class="table-light " >
+    <tr>
+      <th scope="col">Customer Name</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  <?php foreach ($RESEVERS as $RESEVER): ?>
+
+    <tr>
+
+     
+    <td> <?=  htmlspecialchars($RESEVER["USERNAME"])?></td>
+
+<td>
+           <button class="btn btn-success btn-sm me-2"><i class="bi bi-check-circle"></i> <a href="../src/objecte/editReser.php?id=<?=  htmlspecialchars($RESEVER["id_Reserve"])?>&nm=actif"> actif</a></button>
+        <button class="btn btn-danger btn-sm"><i class="bi bi-x-circle"></i><a href="../src/objecte/editReser.php?id=<?=  htmlspecialchars($RESEVER["id_Reserve"])?>&nm=en_attente">en_attente</a></button>
+</td>
+
+      
+    </tr>
+
+ <?php endforeach ?>
+  </tbody>
+</table>
+
                   <!-- footer -->
                   <div class="container-fluid">
                      <div class="footer">
@@ -260,6 +211,11 @@ $actif = $res2->RECont('actif');
                            Distributed By: <a href="https://themewagon.com/">ThemeWagon</a>
                         </p>
                      </div>
+                  </div>
+               </div>
+                  <!-- footer -->
+                  <div class="container-fluid">
+     
                   </div>
                </div>
                <!-- end dashboard inner -->
@@ -289,5 +245,29 @@ $actif = $res2->RECont('actif');
       <!-- custom js -->
       <script src="js/custom.js"></script>
       <script src="js/chart_custom_style1.js"></script>
+
+<script>
+    document.getElementById('add-vehicle').addEventListener('click', function () {
+        const container = document.getElementById('vehicles-container');
+        const vehicleGroups = container.getElementsByClassName('vehicle-group');
+        const index = vehicleGroups.length;
+
+        const newGroup = vehicleGroups[0].cloneNode(true);
+
+       
+        const inputs = newGroup.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            const name = input.name.replace(/\[\d+\]/, `[${index}]`);
+            input.name = name;
+
+            if (input.id) {
+                input.id = input.id.replace(/_\d+$/, `_${index}`);
+            }
+            input.value = ''; 
+        });
+
+        container.appendChild(newGroup);
+    });
+</script>
    </body>
 </html>

@@ -4,16 +4,16 @@ ini_set('display_errors', 1);
 require_once "../src/class/car.php";
 $person = new Car();
 
-session_start();
+// session_start();
 
 
 
-if (isset($_SESSION['user_id']) )
-{
+// if (isset($_SESSION['user_id']) )
+// {
 
-}else {
-    header("Location: login.php");
-}
+// }else {
+//     header("Location: login.php");
+// }
 
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
