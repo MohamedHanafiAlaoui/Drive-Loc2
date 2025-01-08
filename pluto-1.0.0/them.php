@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-require ("../src/class/colorType.php");
+require ("../src/class/them.php");
 session_start();
 
 
@@ -15,13 +15,11 @@ session_start();
 
 
 
-$color = new colorType();
+$them = new them();
 
-$COLORS = $color->viewColor();
+$themS = $them->viewthem();
 
-$TYPE= new colorType();
 
-$TYPES=$TYPE->viewType();
 
 
 ?>
@@ -176,26 +174,52 @@ $TYPES=$TYPE->viewType();
     </form>
 </div>
 
+<form action="../src/objecte/editthem.php" method="post">
+        <div id="vehicles-container">
+            <!-- Groupe de champs pour un véhicule -->
+            <div class="vehicle-group">
+                <!-- Model -->
+                <div class="mb-3">
+                    <label for="them" class="form-label">them</label>
+                    <input type="text" class="form-control" id = "namethem" name="them" required>
+                </div>
+                
+                <input type="hidden" class="form-control" id="id_them" name="id_them" required>
+                
+                
+                
+            </div>
+        </div>
+
+        <!-- Boutons -->
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                <hr>
+
+    </form>
+
 <div class="midde_cont">
                <table class="table table-striped table-bordered align-middle" style="margin-top: 20px;">
   <thead class="table-light " >
     <tr>
-      <th scope="col">Customer Name</th>
+      <th scope="col">them Name</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
-  <?php foreach ($RESEVERS as $RESEVER): ?>
+  <?php foreach ($themS as $thems): ?>
 
     <tr>
 
      
-    <td> <?=  htmlspecialchars($RESEVER["USERNAME"])?></td>
+    <td> <?=  htmlspecialchars($thems["namethem"])?></td>
 
-<td>
-           <button class="btn btn-success btn-sm me-2"><i class="bi bi-check-circle"></i> <a href="../src/objecte/editReser.php?id=<?=  htmlspecialchars($RESEVER["id_Reserve"])?>&nm=actif"> actif</a></button>
-        <button class="btn btn-danger btn-sm"><i class="bi bi-x-circle"></i><a href="../src/objecte/editReser.php?id=<?=  htmlspecialchars($RESEVER["id_Reserve"])?>&nm=en_attente">en_attente</a></button>
-</td>
+
+         <td>
+               <button class="btn btn-success btn-sm me-2 modfier" onclick="modfier('<?php  echo $thems['namethem'];?>', '<?php  echo ($thems['id_them']);?>')"><i class="bi bi-check-circle"></i>  actif</button>
+               <button class="btn btn-danger btn-sm"><i class="bi bi-x-circle"></i>en_attente</button>
+         </td>
+
+         <?php  var_dump ($thems['id_them']);?>
 
       
     </tr>
@@ -268,6 +292,20 @@ $TYPES=$TYPE->viewType();
 
         container.appendChild(newGroup);
     });
+
+
+
+   
+    function modfier(name,id) {
+
+      document.getElementById('namethem').value = name;
+      document.getElementById('id_them').value = id ;
+      console.log(id);
+      
+      
+    }
+
+
 </script>
    </body>
 </html>

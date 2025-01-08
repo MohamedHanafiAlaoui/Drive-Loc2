@@ -6,23 +6,24 @@ require_once '../class/them.php';
 
 if (isset($_POST['submit'])) {
     $thems  = new them();
+    $them=$_POST['them'];
+    $id_them=$_POST['id_them'];
+   var_dump($_POST);
+   
+ 
 
-    foreach ($_POST['vehicles'] as $vehicle) {
-        $them  = $vehicle['modele'];
-        // var_dump($them);
-
-
-        // Appeler la méthode pour ajouter le véhicule
-        $result = $thems ->AJOTERthem($them );
+        
+        $result = $thems ->mdfthem($id_them,$them );
 
         if (!$result) {
             $error = "Failed to add vehicle: " . htmlspecialchars($them );
-            header("Location: /pluto-1.0.0/addcar.php?msg=" . urlencode($error));
+            var_dump($error);
+            header("Location: /pluto-1.0.0/them.php?msg=" . urlencode($error));
             exit;
         }
-    }
+    
 
-    // Redirection après le succès
+ 
     header("Location: /pluto-1.0.0/them.php");
     exit;
 }

@@ -51,23 +51,16 @@ class them extends connection_db
         }
     }
 
-    public function mdfthem($id_car, $modele, $id_color, $prix, $disponibilite, $id_type, $lieu, $kilometrage)
+    public function mdfthem($id_them, $namethem)
     {
         try {
             
-            $stmt = $this->dbcnx->prepare("UPDATE Car 
-            SET modele = :modele, id_color = :id_color, prix = :prix, 
-                disponibilite = :disponibilite, id_type = :id_type, 
-                lieu = :lieu, kilometrage = :kilometrage 
-            WHERE id_car = :id_car");
-        $stmt->bindParam(':id_car', $id_car);
-        $stmt->bindParam(':modele', $modele);
-        $stmt->bindParam(':id_color', $id_color);
-        $stmt->bindParam(':prix', $prix);
-        $stmt->bindParam(':disponibilite', $disponibilite);
-        $stmt->bindParam(':id_type', $id_type);
-        $stmt->bindParam(':lieu', $lieu);
-        $stmt->bindParam(':kilometrage', $kilometrage);
+            $stmt = $this->dbcnx->prepare("UPDATE them 
+            SET namethem = :namethem
+            WHERE id_them = :id_them");
+        $stmt->bindParam(':id_them', $id_them);
+        $stmt->bindParam(':namethem', $namethem);
+
     
             
             return $stmt->execute();
@@ -77,9 +70,19 @@ class them extends connection_db
             return false;
         }
     }
-    public function viewthem($id_car, $id_type)
+    public function viewthem()
     {
-        
+        try {
+            
+            $stmt = $this->dbcnx->prepare("SELECT * FROM them");
+    
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            
+            error_log("Erreur lors de la suppression d'une voiture : " . $e->getMessage());
+            return false;
+        } 
     }
             
 
