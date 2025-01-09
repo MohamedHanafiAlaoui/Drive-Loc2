@@ -13,7 +13,7 @@ if (isset($_SESSION['user_id']) )
 }else {
     header("Location: login.php");
 }
-$person = new Car();
+
 
 
 
@@ -26,14 +26,13 @@ if (isset($_GET['page'])) {
 
 if (isset($_GET["id"])) {
     $id=$_GET['id'];
- 
-    $OneviewCa = new Car();
-    $OneviewCars = $OneviewCa->OneviewCar($id);
- 
-    $OneviewRatinUser = new RatinUser();
-    $OneviewRatinUsers = $OneviewRatinUser->viewRatinUser($id);
+    $ARTICL = new ARTICLE();
 
-    // var_dump($OneviewRatinUsers);
+    $OneviewCars = $ARTICL->OneviewARTICLE($id);
+ 
+    // $OneviewRatinUser = new RatinUser();
+    // $OneviewRatinUsers = $OneviewRatinUser->viewRatinUser($id);
+
  } else {
     
  }
@@ -165,98 +164,137 @@ if (isset($_GET["id"])) {
 
         <!-- Car categories Start -->
 
-        <main class="container my-4">
-        <div class="row">
-            <!-- Car Image -->
-            <div class="col-md-6">
-                <img src="./img/car-3.png" class="img-fluid rounded shadow" alt="Car Image">
-            </div>
-            <!-- Car Details -->
-            <div class="col-md-6">
-                 <h2 class="mb-3"><?php echo($OneviewCars[0]["modele"]); ?></h2> 
-                <p class="text-muted">Brand: <strong>"<?php echo($OneviewCars[0]["modele"]); ?></strong></p>
-                <p>Price: <strong>$<?php echo($OneviewCars[0]["prix"]); ?>,000</strong></p>
-                <p>Fuel Type: <strong>Petrol</strong></p>
-                <p>Mileage: <strong><?php echo($OneviewCars[0]["modele"]); ?> km/l</strong></p>
-                <p>Transmission: <strong>Automatic</strong></p>
-                <p>Seating Capacity: <strong>5</strong></p>
-                <!-- <button class="btn btn-primary mt-3">Contact Dealer</button> -->
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Post content-->
+                    <article>
+                        <!-- Post header-->
+                        <header class="mb-4">
+                            <!-- Post title-->
+                            <h1 class="fw-bolder mb-1"><?php echo($OneviewCars[0]["Titer"]); ?></h1>
+                            <!-- Post meta content-->
+                            <div class="text-muted fst-italic mb-2"><?php echo($OneviewCars[0]["D_date"]); ?></div>
+                            <!-- Post categories-->
+                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
+                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+                        </header>
+                        <!-- Preview image figure-->
+                        <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
+                        <!-- Post content-->
+                        <section class="mb-5">
+                            <p class="fs-5 mb-4"><?php echo($OneviewCars[0]["contenu"]); ?></p>
+
+                        </section>
+                    </article>
+                    <!-- Comments section-->
+
+<section class="gradient-custom">
+<form action="../src/objecte/AJOTERcommentaires.php" method="post">
+        <div id="vehicles-container">
+            <!-- Groupe de champs pour un véhicule -->
+            <div class="vehicle-group">
+                <!-- Model -->
+                <div class="mb-3">
+                    <input type="text" class="form-control" id = "namethem" name="contenu" required>
+                </div>
+                
+                <input type="hidden" class="form-control" id="id_them" name="id_Article" value="<?php echo($OneviewCars[0]['id_ARTICLE']); ?>" required>
+                <input type="hidden" class="form-control" id="id_them" name="id_user" value="<?php echo $_SESSION['user_id']; ?>" required>
+                
+                
+                
             </div>
         </div>
 
-        <!-- Description Section -->
-        <section class="mt-5">
+        <!-- Boutons -->
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                <hr>
 
-            <h3>Description</h3>
-            <p>
-            <?php echo($OneviewCars[0]["Description"]); ?>
-            </p>
-        </section>
+    </form>
+  <div class="container my-5 py-5">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-12 col-lg-10 col-xl-8">
+        <div class="card">
+          <div class="card-body p-4">
+            <h4 class="text-center mb-4 pb-2"> comments </h4>
 
-        <form action="../src/objecte/RESEVER.php" method="post">
-            <div class="mb-3">
-                <label for="address" class="form-label">Address</label>
-                <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
-            </div>
-            <div class="mb-3">
-                <label for="times" class="form-label">Times</label>
-                <input type="date" class="form-control" id="times" name="times" placeholder="Enter times">
-            </div>
-            <div class="mb-3">
-                <!-- <label for="id_user" class="form-label">User ID</label> -->
-                <input type="hidden" class="form-control" id="id_user" name="id_user" value="<?php echo($_SESSION['user_id']); ?>" placeholder="Enter User ID">
-            </div>
-            <div class="mb-3">
-                
-                <input type="hidden" name="id_car" value="<?php echo($OneviewCars[0]["id_car"]); ?>"> </div>
-            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-        </form>
 
-        <div class="container mt-5">
-        <h1 class="text-center mb-4">Menu Sélection</h1>
-        <form action="../src/objecte/RES.PHP" id="menuForm" class="text-center" method="post">
-            <div class="mb-3">
-                <label for="menuSelect" class="form-label">Choisissez une option :</label>
-                <select class="form-select" name="id_ratin" id="menuSelect">
-                    <option value="" selected disabled>-- Sélectionnez une option --</option>
-                    <option value="1" style="color:burlywood;">&#9733</option>
-                    <option value="2" style="color:burlywood;"> &#9733 &#9733 </option>
-                    <option value="3" style="color:burlywood;" >&#9733 &#9733 &#9733</option>
-                    <option value="4" style="color:burlywood;">&#9733 &#9733 &#9733 &#9733</option>
-                    <option value="5" style="color:burlywood;"> &#9733 &#9733 &#9733 &#9733 &#9733</option>
-                </select>
-                <input type="hidden" name="iduser" value="<?php echo $_SESSION['user_id']; ?>">
-                <input type="hidden" name="idcar" value="<?php echo($OneviewCars[0]["id_car"]); ?>">
-            </div>
-            <button type="submit" name="submit" class="btn btn-primary" >Valider</button>
-        </form>
-    </div>
-    <div class="container mt-5">
-    <?php
-            if ($OneviewRatinUsers != null) {
-                ?>
-                 <?php foreach ($OneviewRatinUsers as $OneviewRatinUser): ?>
-                <div class="mt-4  " style="border:solid 2px red"> 
-                <h2><?php echo $OneviewRatinUser['name'];?></h2> 
-                <h3 id="displayName">
-                    <?php
-                    for ($i=0; $i < $OneviewRatinUser['NUBER']; $i++) { 
-                        echo '&#9733 ';
-                    }   
-                    ?>
-                  
-                </h3>
+            <div class="row">
+              <div class="col">
+                <div class="d-flex flex-start">
+                  <img class="rounded-circle shadow-1-strong me-3"
+                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar" width="65"
+                    height="65" />
+                  <div class="flex-grow-1 flex-shrink-1">
+                    <div>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <p class="mb-1">
+                          Maria Smantha <span class="small">- 2 hours ago</span>
+                        </p>
+                        <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small"> reply</span></a>
+                      </div>
+                      <p class="small mb-0">
+                        It is a long established fact that a reader will be distracted by
+                        the readable content of a page.
+                      </p>
+                    </div>
+
+                  </div>
                 </div>
 
-                
-              <?php
-              endforeach;
-            }
 
-            ?>
-
-    </main>
-
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+                <!-- Side widgets-->
+        <div class="col-lg-4">
+                    <!-- Search widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Search</div>
+                        <div class="card-body">
+                            <div class="input-group">
+                                <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                                <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Categories widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Categories</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="#!">Web Design</a></li>
+                                        <li><a href="#!">HTML</a></li>
+                                        <li><a href="#!">Freebies</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="#!">JavaScript</a></li>
+                                        <li><a href="#!">CSS</a></li>
+                                        <li><a href="#!">Tutorials</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Side widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Side Widget</div>
+                        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 

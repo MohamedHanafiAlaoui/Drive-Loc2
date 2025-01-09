@@ -158,7 +158,7 @@ $articlList = $articl->GetARTICLE($page);
                                 </div>
                                 <a href="#" class="h4 d-block mb-3"><?php echo $articl['Titer'] ?></a>
                                 <p class="mb-3 text-truncate"><?php echo $articl['contenu'] ?></p>
-                                <a href="#" class="">Read More  <i class="fa fa-arrow-right"></i></a>
+                                <a href="./detARTICLE.PHP?id=<?php echo $articl['id_ARTICLE'] ?>" class="">Read More  <i class="fa fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>

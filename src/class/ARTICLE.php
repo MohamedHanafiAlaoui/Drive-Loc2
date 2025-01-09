@@ -40,7 +40,7 @@ class ARTICLE extends connection_db
             }
             
         }
-    public function AJOTERARTICLE($Titer, $contenu, $tags, $id_user, $id_them,  $image,$s_status )
+         public function AJOTERARTICLE($Titer, $contenu, $tags, $id_user, $id_them,  $image,$s_status )
         {
             try {
                 
@@ -97,6 +97,29 @@ class ARTICLE extends connection_db
             $query->bindParam(':limit', var: $this->lignes_par_page, type: PDO::PARAM_INT);
             $query->execute();
             return $query->fetchAll();
+        }
+
+        public function OneviewARTICLE($id_ARTICLE)
+        {
+            try {
+            
+                $stmt = $this->dbcnx->prepare("SELECT ARTICLE.* ,
+                them.namethem AS thems, 
+                user.FullName AS f_name from ARTICLE 
+                JOIN them on ARTICLE.id_them= them.id_them 
+                join user on ARTICLE.id_user = user.id_user 
+                WHERE id_ARTICLE = :id;
+                ");
+                $stmt->bindParam(':id', $id_ARTICLE);
+
+        
+                $stmt->execute();
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                
+                error_log("Erreur lors de la suppression d'une voiture : " . $e->getMessage());
+                return false;
+            }
         }
             
       
