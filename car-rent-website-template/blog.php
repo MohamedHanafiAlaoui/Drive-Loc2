@@ -1,3 +1,25 @@
+<?php
+
+
+require_once "../src/class/ARTICLE.php";
+$articl = new ARTICLE();
+
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+} else {
+    $page = 1;
+}
+
+$totalRows = $articl->Nbr_ARTICLE();
+$rowsPerPage = $articl->getLinesParPage();
+
+$totalPages = ceil($totalRows / $rowsPerPage);
+
+$articlList = $articl->GetARTICLE($page);
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -122,61 +144,68 @@
                     </p>
                 </div>
                 <div class="row g-4">
+                <?php foreach ($articlList as $articl): ?>
                     <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="blog-item">
                             <div class="blog-img">
-                                <img src="img/blog-1.jpg" class="img-fluid rounded-top w-100" alt="Image">
+                                <img src="<?php echo $articl['image'] ?>" class="img-fluid rounded-top w-100" alt="Image">
                             </div>
                             <div class="blog-content rounded-bottom p-4">
-                                <div class="blog-date">30 Dec 2025</div>
+                                <div class="blog-date"><?php echo $articl['D_date'] ?></div>
                                 <div class="blog-comment my-3">
-                                    <div class="small"><span class="fa fa-user text-primary"></span><span class="ms-2">Martin.C</span></div>
+                                    <div class="small"><span class="fa fa-user text-primary"></span><span class="ms-2"><?php echo $articl['f_name'] ?></span></div>
                                     <div class="small"><span class="fa fa-comment-alt text-primary"></span><span class="ms-2">6 Comments</span></div>
                                 </div>
-                                <a href="#" class="h4 d-block mb-3">Rental Cars how to check driving fines?</a>
-                                <p class="mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius libero soluta impedit eligendi? Quibusdam, laudantium.</p>
+                                <a href="#" class="h4 d-block mb-3"><?php echo $articl['Titer'] ?></a>
+                                <p class="mb-3 text-truncate"><?php echo $articl['contenu'] ?></p>
                                 <a href="#" class="">Read More  <i class="fa fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <img src="img/blog-2.jpg" class="img-fluid rounded-top w-100" alt="Image">
-                            </div>
-                            <div class="blog-content rounded-bottom p-4">
-                                <div class="blog-date">25 Dec 2025</div>
-                                <div class="blog-comment my-3">
-                                    <div class="small"><span class="fa fa-user text-primary"></span><span class="ms-2">Martin.C</span></div>
-                                    <div class="small"><span class="fa fa-comment-alt text-primary"></span><span class="ms-2">6 Comments</span></div>
-                                </div>
-                                <a href="#" class="h4 d-block mb-3">Rental cost of sport and other cars</a>
-                                <p class="mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius libero soluta impedit eligendi? Quibusdam, laudantium.</p>
-                                <a href="#" class="">Read More  <i class="fa fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <img src="img/blog-3.jpg" class="img-fluid rounded-top w-100" alt="Image">
-                            </div>
-                            <div class="blog-content rounded-bottom p-4">
-                                <div class="blog-date">27 Dec 2025</div>
-                                <div class="blog-comment my-3">
-                                    <div class="small"><span class="fa fa-user text-primary"></span><span class="ms-2">Martin.C</span></div>
-                                    <div class="small"><span class="fa fa-comment-alt text-primary"></span><span class="ms-2">6 Comments</span></div>
-                                </div>
-                                <a href="#" class="h4 d-block mb-3">Document required for car rental</a>
-                                <p class="mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius libero soluta impedit eligendi? Quibusdam, laudantium.</p>
-                                <a href="#" class="">Read More  <i class="fa fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach ?>
+
                 </div>
             </div>
         </div>
         <!-- Blog End -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination mt-5  justify-content-center">
+                <!-- Previous Button -->
+                <li class="page-item">
+                    <?php
+                    if ($page > 1) {
+                        $prevPage = $page - 1;
+                        echo "<a class='page-link' href='?page=$prevPage'><span aria-hidden='true'>&laquo;</span> Previous</a>";
+                    } else {
+                        echo "<span class='page-link disabled'><span aria-hidden='true'>&laquo;</span> Previous</span>";
+                    }
+                    ?>
+                </li>
+
+                <!-- Page Numbers -->
+                <?php
+                for ($i = 1; $i <= $totalPages; $i++) {
+                    if ($page === $i) {
+                        echo "<li class='page-item active'><span class='page-link'>$i</span></li>";
+                    } else {
+                        echo "<li class='page-item'><a class='page-link' href='?page=$i'>$i</a></li>";
+                    }
+                }
+                ?>
+
+                <!-- Next Button -->
+                <li class="page-item">
+                    <?php
+                    if ($page < $totalPages) {
+                        $nextPage = $page + 1;
+                        echo "<a class='page-link' href='?page=$nextPage'>Next <span aria-hidden='true'>&raquo;</span></a>";
+                    } else {
+                        echo "<span class='page-link disabled'>Next <span aria-hidden='true'>&raquo;</span></span>";
+                    }
+                    ?>
+                </li>
+            </ul>
+                </nav>
 
         <!-- Fact Counter -->
         <div class="container-fluid counter py-5">
@@ -194,42 +223,7 @@
                             <h4 class="text-white mb-0">Happy Clients</h4>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="counter-item text-center">
-                            <div class="counter-item-icon mx-auto">
-                                <i class="fas fa-car-alt fa-2x"></i>
-                            </div>
-                            <div class="counter-counting my-3">
-                                <span class="text-white fs-2 fw-bold" data-toggle="counter-up">56</span>
-                                <span class="h1 fw-bold text-white">+</span>
-                            </div>
-                            <h4 class="text-white mb-0">Number of Cars</h4>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="counter-item text-center">
-                            <div class="counter-item-icon mx-auto">
-                                <i class="fas fa-building fa-2x"></i>
-                            </div>
-                            <div class="counter-counting my-3">
-                                <span class="text-white fs-2 fw-bold" data-toggle="counter-up">127</span>
-                                <span class="h1 fw-bold text-white">+</span>
-                            </div>
-                            <h4 class="text-white mb-0">Car Center</h4>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.7s">
-                        <div class="counter-item text-center">
-                            <div class="counter-item-icon mx-auto">
-                                <i class="fas fa-clock fa-2x"></i>
-                            </div>
-                            <div class="counter-counting my-3">
-                                <span class="text-white fs-2 fw-bold" data-toggle="counter-up">589</span>
-                                <span class="h1 fw-bold text-white">+</span>
-                            </div>
-                            <h4 class="text-white mb-0">Total kilometers</h4>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

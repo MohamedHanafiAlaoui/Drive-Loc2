@@ -244,7 +244,7 @@ $personList = $person->GetCar($page);
                     ?>
                 </li>
             </ul>
-        </nav>
+                </nav>
                 
             </div>
         </div>
