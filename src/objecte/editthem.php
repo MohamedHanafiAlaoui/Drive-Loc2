@@ -8,7 +8,7 @@ if (isset($_POST['submit'])) {
     $thems  = new them();
     $them=$_POST['them'];
     $id_them=$_POST['id_them'];
-   var_dump($_POST);
+
    
  
 

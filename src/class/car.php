@@ -19,6 +19,7 @@ class Car extends connection_db
     protected $dbcnx;
     public function __construct()
     {
+        
         $this->dbcnx = $this->connect();
 
     }
@@ -97,7 +98,13 @@ class Car extends connection_db
         {
             try {
             
-                $stmt = $this->dbcnx->prepare("SELECT Car.id_car,Car.modele,Car.prix,Car.disponibilite,Car.lieu,Car.kilometrage,Car.image,Car.Description ,color.nameColor AS colorName,type.nameType AS TypeName FROM Car JOIN color ON Car.id_color = color.id_color JOIN type ON Car.id_type = type.id_type;
+                $stmt = $this->dbcnx->prepare("SELECT 
+                Car.id_car,Car.modele,Car.prix,Car.disponibilite,Car.lieu,Car.kilometrage,Car.image,Car.Description ,
+                color.nameColor AS colorName,
+                type.nameType AS TypeName 
+                FROM Car 
+                JOIN color ON Car.id_color = color.id_color 
+                JOIN type ON Car.id_type = type.id_type;
 ");
         
                 $stmt->execute();

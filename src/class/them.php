@@ -32,24 +32,24 @@ class them extends connection_db
             return false;
         }
     }
-    public function SUprimerCar($id_caid_themr)
-    {
-        try {
+    // public function SUprimerCar($id_caid_themr)
+    // {
+    //     try {
             
-            $stmt = $this->dbcnx->prepare("DELETE FROM Car WHERE id_car = :id");
+    //         $stmt = $this->dbcnx->prepare("DELETE FROM Car WHERE id_car = :id");
     
             
-            $stmt->bindParam(':id', $id_car);
+    //         $stmt->bindParam(':id', $id_car);
 
     
             
-            return $stmt->execute();
-        } catch (PDOException $e) {
+    //         return $stmt->execute();
+    //     } catch (PDOException $e) {
             
-            error_log("Erreur lors de la suppression d'une voiture : " . $e->getMessage());
-            return false;
-        }
-    }
+    //         error_log("Erreur lors de la suppression d'une voiture : " . $e->getMessage());
+    //         return false;
+    //     }
+    // }
 
     public function mdfthem($id_them, $namethem)
     {

@@ -215,11 +215,11 @@ $themS = $them->viewthem();
 
 
          <td>
-               <button class="btn btn-success btn-sm me-2 modfier" onclick="modfier('<?php  echo $thems['namethem'];?>', '<?php  echo ($thems['id_them']);?>')"><i class="bi bi-check-circle"></i>  actif</button>
-               <button class="btn btn-danger btn-sm"><i class="bi bi-x-circle"></i>en_attente</button>
+               <button class="btn btn-success btn-sm me-2 modfier" onclick="modfier('<?php  echo $thems['namethem'];?>', '<?php  echo ($thems['id_them']);?>')"><i class="bi bi-check-circle"></i>  modifier</button>
+               <!-- <button class="btn btn-danger btn-sm"><i class="bi bi-x-circle"></i>en_attente</button> -->
          </td>
 
-         <?php  var_dump ($thems['id_them']);?>
+         
 
       
     </tr>
