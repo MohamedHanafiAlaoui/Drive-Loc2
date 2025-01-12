@@ -1,20 +1,8 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-require ("../src/class/colorType.php");
-require ("../src/class/car.php");
-// $OneviewCars;
+require ("../src/class/ARTICLE.php");
 session_start();
-if (isset($_GET["id"])) {
-   $id=$_GET['id'];
-
-   $OneviewCa = new Car();
-
-$OneviewCars = $OneviewCa->OneviewCar($id);
-
-} else {
-   
-}
 if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == 1))
 {
 
@@ -23,17 +11,21 @@ if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == 1))
     header("Location: /car-rent-website-template/login.php");
 }
 
+session_start();
 
-// var_dump($OneviewCars);
+if (isset($_SESSION['user_id']) )
+{
+}else {
+    header("Location: ../car-rent-website-template/login.php");
+}
+
+
+$ARTICL= new ARTICLE();
+
+$ARTICLE=$ARTICL->viewARTICLE();
+
+// var_dump($ARTICLE);
 // exit;
-$color = new colorType();
-
-$COLORS = $color->viewColor();
-
-$TYPE= new colorType();
-
-$TYPES=$TYPE->viewType();
-
 
 ?>
 
@@ -163,92 +155,39 @@ $TYPES=$TYPE->viewType();
                <!-- end topbar -->
                <!-- dashboard inner -->
                <div class="midde_cont">
-                  <div class="container-fluid">
-                    <form action="../src/objecte/editcare.php" method="post">
-                        <!-- Model -->
-                         <input type="hidden" name="id_car" value="<?php echo($OneviewCars[0]["id_car"])?>">
-                        <div class="mb-3">
-                          <label for="modele" class="form-label">Model</label>
-                          
+               <table class="table table-striped table-bordered align-middle" style="margin-top: 20px;">
+  <thead class="table-light " >
+    <tr>
+      <th scope="col">Customer Name</th>
+      <th scope="col">Car Model</th>
+      <th scope="col">Pickup Date</th>
 
-                          <input type="text" class="form-control" id="modele" name="modele" value="<?php echo($OneviewCars[0]["modele"]); ?>" required>
-                          
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  <?php foreach ($ARTICLE as $ARTICL): ?>
 
-                        </div>
-                        
-                        <!-- Color -->
-                        <div class="mb-3">
-                          <label for="id_color" class="form-label">Color</label>
-                          <select class="form-select" id="id_color" name="id_color" required>
-                            <option value="">Select Color</option>
-                            <?php foreach ($COLORS as $COLOR): ?>
-                            
-                            <option value=<?= htmlspecialchars ($COLOR['id_color'])?>><?= htmlspecialchars($COLOR['nameColor'])?></option>
-                            <?php endforeach; ?>
-                          </select>
-                        </div>
-                        
-                        <!-- Price -->
-                        <div class="mb-3">
-                          <label for="prix" class="form-label">Price</label>
-                          <input type="number" class="form-control" id="prix" name="prix" step="0.01" value="<?php echo($OneviewCars[0]["prix"]); ?>" required>
-                        </div>
-                        
-                        <!-- Availability -->
-                        <div class="mb-3">
-                          <label class="form-label">Availability</label>
-                          <div>
-                            <label for="disponibilite_yes" class="me-3">
-                              <input type="radio" id="disponibilite_yes" name="disponibilite" value="yes" required> Available
-                            </label>
-                            <label for="disponibilite_no">
-                              <input type="radio" id="disponibilite_no" name="disponibilite" value="no" required> Not Available
-                            </label>
-                          </div>
-                        </div>
-                        
-                        <!-- Type -->
-                        <div class="mb-3">
-                          <label for="id_type" class="form-label">Type</label>
-                          <select class="form-select" id="id_type" name="id_type" required>
-                            <option value="">Select Type</option>
-                            <?php foreach ($TYPES as $TYPE): ?>
-                            
-                            <option value=<?= htmlspecialchars ($TYPE['id_type'])?>><?= htmlspecialchars($TYPE['nameType'])?></option>
-                            <?php endforeach; ?>
-                          </select>
-                        </div>
-                        
-                        <!-- Location -->
-                        <div class="mb-3">
-                          <label for="lieu" class="form-label">Location</label>
-                          <input type="text" class="form-control" id="lieu" name="lieu"  value="<?php echo($OneviewCars[0]["lieu"]); ?>"required>
-                        </div>
-                        
-                        <!-- Mileage -->
-                        <div class="mb-3">
-                          <label for="kilometrage" class="form-label">Mileage</label>
-                          <input type="number" class="form-control" id="kilometrage" name="kilometrage" value="<?php echo($OneviewCars[0]["kilometrage"]); ?>" required>
-                        </div>
-                        
-                        <!-- Image -->
-                        <div class="mb-3">
-                          <label for="image" class="form-label">Image</label>
-                          <input type="text" class="form-control" name="image" id="image" value="<?php echo($OneviewCars[0]["image"]); ?>" required>
-                        </div>
-                        
-                        <!-- Description -->
-                        <div class="mb-3">
-                          <label for="description" class="form-label">Description</label>
-                          <textarea class="form-control" id="description" name="description" rows="4" required>
-                          <?php echo($OneviewCars[0]["Description"]); ?>
-                          </textarea>
-                        </div>
-                        
-                        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-                      </form>
-                      
-                  </div>
+    <tr>
+
+     
+    <td> <?=  htmlspecialchars($ARTICL["f_name"])?></td>
+    <td> <?=  htmlspecialchars($ARTICL["Titer"])?></td>
+    <td> <?=  htmlspecialchars($ARTICL["D_date"])?></td>
+    <td> <?=  htmlspecialchars($ARTICL["s_status"])?></td>
+
+<td>
+           <button class="btn btn-success btn-sm me-2"><i class="bi bi-check-circle"></i> <a href="../src/objecte/editARTICLE.php?id=<?=  htmlspecialchars($ARTICL["id_ARTICLE"])?>&nm=active"> active</a></button>
+        <button class="btn btn-danger btn-sm"><i class="bi bi-x-circle"></i><a href="../src/objecte/editARTICLE.php?id=<?=  htmlspecialchars($ARTICL["id_ARTICLE"])?>&nm=Not Active">Not Active</a></button>
+</td>
+
+      
+    </tr>
+
+ <?php endforeach ?>
+  </tbody>
+</table>
+
                   <!-- footer -->
                   <div class="container-fluid">
                      <div class="footer">

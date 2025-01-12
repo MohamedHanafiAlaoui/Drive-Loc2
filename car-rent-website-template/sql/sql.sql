@@ -217,3 +217,16 @@ ADD FOREIGN KEY (id_user) REFERENCES user(id_user)
 
 ALTER TABLE commentaires 
 MODIFY COLUMN c_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+
+create table tags (id_tag int not null AUTO_INCREMENT PRIMARY KEY ,nametags varchar(50) NOT null);
+
+create table tagscommentaires (id_tagscommentaires int not null AUTO_INCREMENT PRIMARY KEY ,id_tag int not null,id_commentaires int not null);
+
+
+ALTER TABLE tagscommentaires ADD FOREIGN KEY (`id_tag`) REFERENCES tags(id_tag);
+
+//ALTER TABLE tagscommentaires ADD FOREIGN KEY (`id_commentaires`) REFERENCES commentaires(`id_commentaires`);
+
+
+ALTER TABLE tagscommentaires ADD FOREIGN KEY (`id_article`) REFERENCES ARTICLE(`id_ARTICLE`);

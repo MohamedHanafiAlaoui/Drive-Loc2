@@ -12,6 +12,13 @@ if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == 1))
     header("Location: /car-rent-website-template/login.php");
 }
 
+session_start();
+
+if (isset($_SESSION['user_id']) )
+{
+}else {
+    header("Location: ../car-rent-website-template/login.php");
+}
 
 $RESEVE= new RESEVER();
 
@@ -95,9 +102,10 @@ $RESEVERS=$RESEVE->viewRESEVER();
                      <li>
                         <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>
                         <ul class="collapse list-unstyled" id="apps">
-                           <li><a href="./RESEVER">> <span>RESEVER</span></a></li>
-                           <li><a href="calendar.html">> <span>Calendar</span></a></li>
-                           <li><a href="media_gallery.html">> <span>Media Gallery</span></a></li>
+                           <li><a href="./RESEVATION.php">> <span>RESEVER</span></a></li>
+                           <li><a href="./tags.php">> <span>TAGS</span></a></li>
+                           <li><a href="./them.php">> <span>THEME</span></a></li>
+                           <li><a href="./ARTICLE.php">> <span>ARTICLE</span></a></li>
                         </ul>
                      </li>
                      <li><a href="../car-rent-website-template/loguot.php"><i class="fa-solid fa-right-from-bracket"></i> <span>Logut</span></a></li>

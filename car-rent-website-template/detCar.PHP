@@ -128,7 +128,7 @@ if (isset($_GET["id"])) {
                             <a href="index.php" class="nav-item nav-link active">Home</a>
                             <a href="about.html" class="nav-item nav-link">About</a>
                             <a href="cars.PHP" class="nav-item nav-link">Our Cars</a>
-                            <!-- <a href="blog.html" class="nav-item nav-link">Blog</a> -->
+                             <a href="./blog.php" class="nav-item nav-link">Blog</a> 
                             
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">user</a>
@@ -136,7 +136,7 @@ if (isset($_GET["id"])) {
                                 <a href="#" class="dropdown-item"><?php echo $_SESSION['FullName']; ?></a>
 
                                     <a href="./loguot.php" class="dropdown-item">loguot</a>
-                                    <!-- <a href="cars.html" class="dropdown-item">Our Cars</a> -->
+                                    <a href="./addArticle.php" class="dropdown-item">add Article</a>
                                     <!-- <a href="team.html" class="dropdown-item">Our Team</a> -->
                                    
                                 </div>

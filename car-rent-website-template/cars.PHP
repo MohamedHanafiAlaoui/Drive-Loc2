@@ -4,16 +4,16 @@ ini_set('display_errors', 1);
 require_once "../src/class/car.php";
 $person = new Car();
 
-// session_start();
+session_start();
 
 
 
-// if (isset($_SESSION['user_id']) )
-// {
+if (isset($_SESSION['user_id']) )
+{
 
-// }else {
-//     header("Location: login.php");
-// }
+}else {
+    header("Location: login.php");
+}
 
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
@@ -114,7 +114,7 @@ $personList = $person->GetCar($page);
                             <a href="index.php" class="nav-item nav-link active">Home</a>
                             <a href="about.html" class="nav-item nav-link">About</a>
                             <a href="cars.PHP" class="nav-item nav-link">Our Cars</a>
-                            <!-- <a href="blog.html" class="nav-item nav-link">Blog</a> -->
+                             <a href="./blog.php" class="nav-item nav-link">Blog</a> 
                             
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">user</a>
@@ -122,7 +122,7 @@ $personList = $person->GetCar($page);
                                 <a href="#" class="dropdown-item"><?php echo $_SESSION['FullName']; ?></a>
 
                                     <a href="./loguot.php" class="dropdown-item">loguot</a>
-                                    <!-- <a href="cars.html" class="dropdown-item">Our Cars</a> -->
+                                    <a href="./addArticle.php" class="dropdown-item">add Article</a>
                                     <!-- <a href="team.html" class="dropdown-item">Our Team</a> -->
                                    
                                 </div>

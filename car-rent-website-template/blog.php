@@ -4,6 +4,16 @@
 require_once "../src/class/ARTICLE.php";
 $articl = new ARTICLE();
 
+session_start();
+
+
+
+if (isset($_SESSION['user_id']) )
+{
+
+}else {
+    header("Location: login.php");
+}
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
 } else {
@@ -11,11 +21,18 @@ if (isset($_GET['page'])) {
 }
 
 $totalRows = $articl->Nbr_ARTICLE();
-$rowsPerPage = $articl->getLinesParPage();
+if (isset($_GET['per_page'])) {
+$rowsPerPage = $articl->getLinesParPage($_GET['per_page']);
+$articlList = $articl->GetARTICLE($page , $_GET["search"],$_GET["nametags"]);
 
+} else {
+$rowsPerPage = $articl->getLinesParPage(5);
+$articlList = $articl->GetARTICLE($page , $_GET["search"],$_GET["nametags"]);
+
+
+}
 $totalPages = ceil($totalRows / $rowsPerPage);
 
-$articlList = $articl->GetARTICLE($page);
 
 
 
@@ -89,7 +106,7 @@ $articlList = $articl->GetARTICLE($page);
         <div class="container-fluid nav-bar sticky-top px-0 px-lg-4 py-2 py-lg-0">
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-light">
-                    <a href="" class="navbar-brand p-0">
+                    <a href="index.php" class="navbar-brand p-0">
                         <h1 class="display-6 text-primary"><i class="fas fa-car-alt me-3"></i></i>Cental</h1>
                         <!-- <img src="img/logo.png" alt="Logo"> -->
                     </a>
@@ -98,19 +115,20 @@ $articlList = $articl->GetARTICLE($page);
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav mx-auto py-0">
-                            <a href="index.html" class="nav-item nav-link">Home</a>
+                            <a href="index.php" class="nav-item nav-link active">Home</a>
                             <a href="about.html" class="nav-item nav-link">About</a>
-                            <a href="service.html" class="nav-item nav-link">Service</a>
-                            <a href="blog.html" class="nav-item nav-link active">Blog</a>
+                            <a href="cars.PHP" class="nav-item nav-link">Our Cars</a>
+                             <a href="./blog.php" class="nav-item nav-link">Blog</a> 
                             
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">user</a>
                                 <div class="dropdown-menu m-0">
-                                    <a href="feature.html" class="dropdown-item">Our Feature</a>
-                                    <a href="cars.html" class="dropdown-item">Our Cars</a>
-                                    <a href="team.html" class="dropdown-item">Our Team</a>
-                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
+                                <a href="#" class="dropdown-item"><?php echo $_SESSION['FullName']; ?></a>
+
+                                    <a href="./loguot.php" class="dropdown-item">loguot</a>
+                                    <a href="./addArticle.php" class="dropdown-item">add Article</a>
+                                    <!-- <a href="team.html" class="dropdown-item">Our Team</a> -->
+                                   
                                 </div>
                             </div>
                             <a href="contact.html" class="nav-item nav-link">Contact</a>
@@ -135,6 +153,7 @@ $articlList = $articl->GetARTICLE($page);
         </div>
         <!-- Header End -->
 
+
         <!-- Blog Start -->
         <div class="container-fluid blog py-5">
             <div class="container py-5">
@@ -143,6 +162,18 @@ $articlList = $articl->GetARTICLE($page);
                     <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut amet nemo expedita asperiores commodi accusantium at cum harum, excepturi, quia tempora cupiditate! Adipisci facilis modi quisquam quia distinctio,
                     </p>
                 </div>
+
+                <form method="GET">
+    <label for="search">Rechercher :</label>
+    <input type="text" name="search" id="search" onchange="this.form.submit()" >
+    
+    <label for="per_page">Articles par page :</label>
+    <select name="per_page" id="per_page" onchange="this.form.submit()">
+        <option value="5" <?php echo $articles_per_page == 5 ? 'selected' : ''; ?>>5</option>
+        <option value="10" <?php echo $articles_per_page == 10 ? 'selected' : ''; ?>>10</option>
+        <option value="15" <?php echo $articles_per_page == 15 ? 'selected' : ''; ?>>15</option>
+    </select>
+</form>      
                 <div class="row g-4">
                 <?php foreach ($articlList as $articl): ?>
                     <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.1s">

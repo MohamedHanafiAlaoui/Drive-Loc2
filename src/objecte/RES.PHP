@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 
 require_once '../class/ratin.php';
 
-var_dump('fffffffffffff');
+
 
 if (isset($_POST['submit'])) {
     $id_car = $_POST['idcar'];

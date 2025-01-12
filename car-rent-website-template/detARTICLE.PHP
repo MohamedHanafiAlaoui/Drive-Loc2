@@ -2,10 +2,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require_once "../src/class/ARTICLE.php";
-require_once "../src/class/ratin.php";
+require_once "../src/class/commentaires.php";
 session_start();
 
 
+$commentaire = new commentaires();
 
 if (isset($_SESSION['user_id']) )
 {
@@ -16,6 +17,7 @@ if (isset($_SESSION['user_id']) )
 
 
 
+echo($_SESSION['user_role']);
 
 
 if (isset($_GET['page'])) {
@@ -27,8 +29,11 @@ if (isset($_GET['page'])) {
 if (isset($_GET["id"])) {
     $id=$_GET['id'];
     $ARTICL = new ARTICLE();
+$viewcommentaire = $commentaire->viewcommentaires($id);
+
 
     $OneviewCars = $ARTICL->OneviewARTICLE($id);
+    $Tags = $ARTICL->OneviewTags($id);
  
     // $OneviewRatinUser = new RatinUser();
     // $OneviewRatinUsers = $OneviewRatinUser->viewRatinUser($id);
@@ -127,7 +132,7 @@ if (isset($_GET["id"])) {
                             <a href="index.php" class="nav-item nav-link active">Home</a>
                             <a href="about.html" class="nav-item nav-link">About</a>
                             <a href="cars.PHP" class="nav-item nav-link">Our Cars</a>
-                            <!-- <a href="blog.html" class="nav-item nav-link">Blog</a> -->
+                             <a href="./blog.php" class="nav-item nav-link">Blog</a> 
                             
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">user</a>
@@ -135,7 +140,7 @@ if (isset($_GET["id"])) {
                                 <a href="#" class="dropdown-item"><?php echo $_SESSION['FullName']; ?></a>
 
                                     <a href="./loguot.php" class="dropdown-item">loguot</a>
-                                    <!-- <a href="cars.html" class="dropdown-item">Our Cars</a> -->
+                                    <a href="./addArticle.php" class="dropdown-item">add Article</a>
                                     <!-- <a href="team.html" class="dropdown-item">Our Team</a> -->
                                    
                                 </div>
@@ -176,9 +181,10 @@ if (isset($_GET["id"])) {
                             <!-- Post meta content-->
                             <div class="text-muted fst-italic mb-2"><?php echo($OneviewCars[0]["D_date"]); ?></div>
                             <!-- Post categories-->
-                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
-                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
-                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+            <?php foreach ($Tags as $Tag): ?>
+                            <a class="badge bg-secondary text-decoration-none link-light" href="./blog.php?nametags=<?php echo $Tag['nametags'] ?>"><?php echo $Tag['nametags'] ?></a>
+             <?php endforeach ?>
+            
                         </header>
                         <!-- Preview image figure-->
                         <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
@@ -220,7 +226,7 @@ if (isset($_GET["id"])) {
           <div class="card-body p-4">
             <h4 class="text-center mb-4 pb-2"> comments </h4>
 
-
+            <?php foreach ($viewcommentaire as $comment): ?>
             <div class="row">
               <div class="col">
                 <div class="d-flex flex-start">
@@ -231,13 +237,12 @@ if (isset($_GET["id"])) {
                     <div>
                       <div class="d-flex justify-content-between align-items-center">
                         <p class="mb-1">
-                          Maria Smantha <span class="small">- 2 hours ago</span>
+                        <?php echo $comment['Name'] ?> <span class="small">- <?php echo $comment['c_date'] ?> </span>
                         </p>
-                        <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small"> reply</span></a>
+                        <a href="../src/objecte/deltcomments.php?id=<?php echo $_SESSION['user_role'] ?>&id_commentaires=<?php echo  $comment['id_commentaires'] ?>&id_user=<?php echo  $_SESSION['user_id'] ?>"><i class="fas fa-reply fa-xs"></i><span class="small"> delete</span></a>
                       </div>
                       <p class="small mb-0">
-                        It is a long established fact that a reader will be distracted by
-                        the readable content of a page.
+                      <?php echo $comment['contenu'] ?> 
                       </p>
                     </div>
 
@@ -246,7 +251,10 @@ if (isset($_GET["id"])) {
 
 
               </div>
+              
             </div>
+            <?php endforeach ?>
+
           </div>
         </div>
       </div>
